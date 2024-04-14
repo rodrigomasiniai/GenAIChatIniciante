@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ChatDOCx</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #333333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #FFD700;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        input[type="text"] {
+        width: calc(100% - 10px); /* Adjust the width based on your preference */
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #555555;
+        border-radius: 8px; /* Adjust the border-radius for the input */
+        background-color: #444444;
+        color: #ffffff;
+        font-size: 16px;
+        box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #FFD700;
+            color: #000000;
+            padding: 5px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        p.chatbot-response {
+            background-color: #444444;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        p.info-message {
+            background-color: #f36262;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 16px;
+            color: #000000;
+        }
+
+        p.info-message-note {
+            background-color: #444444;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 13px;
+            color: #FFD700;
+        }
+
+        .topics-container {
+            text-align: center;
+        }
+
+        .topic-button {
+            background-color: #4ecbf1;
+            color: #ffffff;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+
+        /* Add this style for hover effect */
+        .topic-button:hover {
+            background-color: #005c00; /* Adjust the color for the hover effect */
+            color: #ffffff; /* Adjust the text color for the hover effect */
+        }
+
+        /* Add this style for selected state */
+        .topic-button-selected {
+            background-color: #07ba07 !important; /* Adjust the color for the selected state */
+            color: #000000 !important; /* Adjust the text color for the selected state */
+        }
+
+        .scale-up {
+            animation: scale-up 0.5s;
+        }
+
+        @keyframes scale-up {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
+    <script>
+        function addScaleUpClass() {
+            var chatbotResponse = document.querySelector(".chatbot-response");
+            chatbotResponse.classList.add("scale-up");
+            chatbotResponse.addEventListener("animationend", removeScaleUpClass);
+        }
+
+        function removeScaleUpClass() {
+            var chatbotResponse = document.querySelector(".chatbot-response");
+            chatbotResponse.classList.remove("scale-up");
+            chatbotResponse.removeEventListener("animationend", removeScaleUpClass);
+        }
+
+        function selectTopic(topicButton, topic) {
+            // Deselect the previously selected button
+            var selectedButton = document.querySelector('.topic-button-selected');
+            if (selectedButton) {
+                selectedButton.classList.remove('topic-button-selected');
+            }
+
+            // Select the clicked button
+            topicButton.classList.add('topic-button-selected');
+
+            // Send an AJAX request to update the selected topic in the session
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/select_topic', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log('Selected topic:', topic);
+                }
+            };
+            xhr.send(JSON.stringify({ 'selected_topic': topic }));
+        }
+
+        // Check if a topic is selected and apply highlighting on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectedTopic = '{{ selected_topic }}';
+            if (selectedTopic) {
+                var selectedButton = document.querySelector('.topic-button[data-topic="' + selectedTopic + '"]');
+                if (selectedButton) {
+                    selectedButton.classList.add('topic-button-selected');
+                }
+            }
+        });
+    </script>
+</head>
+
+{% set topic_colors = {'Contacts': '#FFD700', 'Links': '#FFD700', 'Errors': '#f36262'} %}
+
+<body>
+    <div class="container">
+        <h1>ChatDOCx</h1>
+        <h2>{{ app_name }}</h2>
+        <!-- Display buttons for each topic -->
+        <div class="topics-container">
+            <p>Available domains:</p>
+            {% for topic in load_topics %}
+                {% if topic in topic_colors %}
+                    <button class="topic-button" onclick="selectTopic(this, '{{ topic }}')" data-topic="{{ topic }}" style="background-color: {{ topic_colors[topic] }}; color: #ffffff;">{{ topic }}</button>
+                {% else %}
+                    <button class="topic-button" onclick="selectTopic(this, '{{ topic }}')" data-topic="{{ topic }}">{{ topic }}</button>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <form method="POST">
+            <div>
+                <input type="text" name="user_input" placeholder="Chat by selecting available topics...">
+            </div>
+            <div>
+                <input type="submit" value="Submit" onclick="addScaleUpClass()">
+            </div>
+        </form>
+        <p class="chatbot-response">{{ answer | safe }}</p>
+        <p class="info-message">{{ info_message }}</p>
+        <p class="info-message-note">Note: ChatDOCx is experimental and may not work properly. Please provide context-based questions for better results.</p>
+    </div>
+</body>
+
+</html>

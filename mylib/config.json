@@ -1,0 +1,6 @@
+{
+    "model_name": "deepset/roberta-base-squad2",
+    "summary_model_name": "facebook/bart-large-cnn",
+    "app_name": "",
+    "use_stopwords": true
+}
