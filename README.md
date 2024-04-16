@@ -1,11 +1,11 @@
 # ChatDOCx
 
-### A chatbot powered by Hugging Face and Python
+### A domain specific chatbot powered by Hugging Face and Python
 
 - Chat with your documents by asking questions on a user friendly web app.
 - Summarize your documents.
 - Too many links or contacts? Access them easily.
-- Create your own custom domain e.g., development errors you would like to trace.
+- Create your own custom domain/topic e.g., development errors you would like to trace.
 - Supports different NLP models from Hugging Face.
 - No API keys required!
 
@@ -29,7 +29,9 @@ Here is an example where the bot answers a sample question on transformers:
     - [Install the dependencies](#install-the-dependencies)
     - [Run the web app](#run-the-web-app)
 * [Features](#features)
-    - [Models](#models)
+    - [Domains](#Domains)
+    - [Question answering](#question-answering)
+    - [Text summarization](#text-summarization)
     - [Customization](#customization)
     - [Error handling](#error-handling)
 * [Future scope](#future-scope)
@@ -42,26 +44,26 @@ Here is an example where the bot answers a sample question on transformers:
 ### Transformers
 
 - Transformers are a deep learning model architecture designed for sequential data processing tasks and have revolutionized NLP tasks.
-- They consist of multiple layers of self-attention (which is a key mechanism that enable them to weigh the importance of different input tokens dynamically, capturing long-range dependencies in the data effectively.) and feedforward neural networks.
+- They consist of multiple layers of ``self-attention`` (which is a key mechanism that enable them to weigh the importance of different input tokens dynamically, capturing long-range dependencies in the data effectively.) and ``feedforward neural networks``.
 - Pre-trained models like BERT, GPT, T5 etc., have been released by major organizations, enabling transfer learning for downstream NLP tasks.
 
 We will use the following models for our chatbot:
 
 ### RoBERTa for question answering
 
-Facebook AI's RoBERTa (Robustly Optimized BERT Approach) is an improvement to Google AI's BERT (Bidirectional Encoder Representations from Transformers). While BERT laid the foundation for transformer-based models in NLP, RoBERTa further optimized the pre-training process and achieved better performance by leveraging larger datasets and advanced training techniques:
+Facebook AI's RoBERTa (``Robustly Optimized BERT Approach``) is an improvement to Google AI's BERT (``Bidirectional Encoder Representations from Transformers``). While BERT laid the foundation for transformer-based models in NLP, RoBERTa further optimized the pre-training process and achieved better performance by leveraging larger datasets and advanced training techniques:
 
-- **Advanced Training Techniques:** RoBERTa incorporated techniques such as dynamic masking and increased batch sizes. Dynamic masking involves masking tokens dynamically during pre-training, allowing the model to focus more on learning contextual information. Additionally, RoBERTa used larger mini-batches during training, which helped in better generalization and optimization.
+- **Advanced Training Techniques:** RoBERTa incorporated techniques such as ``dynamic masking`` and ``increased batch sizes``. Dynamic masking involves masking tokens dynamically during pre-training, allowing the model to focus more on learning contextual information. Additionally, RoBERTa used larger mini-batches during training, which helped in better generalization and optimization.
 
-- **Focus on Masked Language Modeling (MLM):** Unlike BERT, which also included the next sentence prediction (NSP) task during pre-training, RoBERTa focused solely on the MLM task. By dedicating all resources to improving the accuracy of predicting masked tokens, RoBERTa was able to fine-tune its language understanding capabilities more effectively.
+- **Focus on Masked Language Modeling (MLM):** Unlike BERT, which also included the ``next sentence prediction (NSP)`` task during pre-training, RoBERTa focused solely on the ``MLM`` task. By dedicating all resources to improving the accuracy of predicting masked tokens, RoBERTa was able to fine-tune its language understanding capabilities more effectively.
 
 ### BART for text summarization
 
 BART (Bidirectional and Auto-Regressive Transformers) is a sequence-to-sequence model introduced by Facebook AI:
 
-- **Bidirectional**: It can process input sequences in both forward and backward directions. This bidirectional capability enables BART to capture context from both preceding and succeeding tokens, enhancing its understanding of the input sequence.
+- **Bidirectional:** It can process input sequences in both forward and backward directions. This bidirectional capability enables BART to capture context from both preceding and succeeding tokens, enhancing its understanding of the input sequence.
 
-- **Auto-Regressive**: It employs an auto-regressive decoding strategy during generation, where it generates one token at a time from left to right based on the previously generated tokens. This approach ensures that each token is conditioned on the tokens generated before it, allowing it to produce coherent and contextually relevant outputs.
+- **Auto-Regressive:** It employs an auto-regressive decoding strategy during generation, where it generates one token at a time from left to right based on the previously generated tokens. This approach ensures that each token is conditioned on the tokens generated before it, allowing it to produce coherent and contextually relevant outputs.
 
 
 ---
@@ -91,26 +93,48 @@ The following can be configured in ```mylib/config.json```:
 
 ```json
 {
-    "model_name": "deepset/roberta-base-squad2",
+    "qa_model_name": "deepset/roberta-base-squad2",
     "summary_model_name": "facebook/bart-large-cnn",
     "app_name": "",
     "use_stopwords": true
 }
 ```
 
-> app_name is optional if you would like to showcase your own branding on the app; use_stopwords will remove the common words for the models to handle the questions better.
+- ``qa_model_name`` is the model used for question answering (RoBERTa).
+- ``summary_model_name`` is the model used for text summarization (BART).
+- ``app_name`` is optional if you would like to showcase your own branding on the app.
+- ``use_stopwords`` will remove the common english words for the models to handle the questions better.
 
-### Models
+### Domains
 
-- TBD
+Setting domains/topics is a core componenent of the chatbot as it performs better if the data is structured specifically as a single domain. Having domains will also help the bot to remember the context when asking questions.
+
+### Question answering
+
+When you run the app, you are enforced to select a domain to start asking questions, not because you can, but because you get better responses :)
+
+### Text summarization
+
+After selecting a domain, simply include the keywords ``summary`` or ``summarize`` in your input question e.g., summary of transformers, summarize nlp etc., to get a summary of the domain.
 
 ### Customization
 
-- TBD
+The chatbot can be highly customized as many functions are designed from scratch with flexibility. For instance:
+
+- **Data:** can be placed under ``data`` folder as a ``.txt`` file.
+- **Domains/topics:** are displayed based on the data (text file name) automatically. Several domains can be created depending on the text files you have in the data folder and you can also change the color of a domain by modifying the following snippet under ``templates/ChatDOCx.html``:
+
+```javascript
+
+{% set topic_colors = {'Contacts': '#FFD700', 'Links': '#FFD700', 'Errors': '#f36262'} %}
+```
+
+- **Models:** used are tested/selected on the responses they provide, but different models from Hugging Face can be used (see ``mylib/config.json`` to configure the model and ``References`` section for a list of Hugging Face models).
+- **Webapp:** The Flask webapp is designed from scratch with JavaScript styling and you can make it insane (see ``templates`` folder).
 
 ### Error handling
 
-Errors will be shown on the red bar in the app. Implemented logic to handle domain selection, empty/short inputs, questions outside the scope of chatbot to prevent misinformation. Here is an example where the bot handles questions that are outside the scope of its knowledge (use_stopwords will enhance this function): 
+Errors will be shown on the red bar in the app. Implemented logic to handle domain selection, empty/short inputs, questions outside the scope of chatbot to prevent misinformation. Below is an example where the bot handles questions outside the scope of its knowledge (Note: ``use_stopwords`` will enhance this function): 
 
 ---
 
@@ -118,6 +142,7 @@ Errors will be shown on the red bar in the app. Implemented logic to handle doma
 
 - Implement RAG (Retrieval-Augmented Generation) to improve domain specific knowledge.
 - Memory function to save the chat history.
+- Function to handle multiple file formats (only supports .txt files atm).
 
 ---
 

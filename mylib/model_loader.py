@@ -13,17 +13,17 @@ class ModelLoader:
         if os.path.isfile(config_file_path):
             with open(config_file_path, "r") as config_file:
                 config = json.load(config_file)
-                model_name = config.get("model_name")
+                qa_model_name = config.get("qa_model_name")
                 summary_model_name = config.get("summary_model_name")
                 app_name = config.get("app_name")
         else:
-            model_name = "bert-large-uncased-whole-word-masking-finetuned-squad"  # Backup model
+            qa_model_name = "bert-large-uncased-whole-word-masking-finetuned-squad"  # Backup model
             app_name = None
             config = None
 
         # Load the question-answering model and tokenizer
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model = AutoModelForQuestionAnswering.from_pretrained(model_name)
+        tokenizer = AutoTokenizer.from_pretrained(qa_model_name)
+        model = AutoModelForQuestionAnswering.from_pretrained(qa_model_name)
         summary_model = summary_model_name
 
         return tokenizer, model, summary_model, app_name, config
