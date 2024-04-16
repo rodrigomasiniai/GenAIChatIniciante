@@ -7,6 +7,7 @@
 - Too many links or contacts? Access them easily.
 - Create your own custom domain e.g., development errors you would like to trace.
 - Supports different NLP models from Hugging Face.
+- No API keys required!
 
 Here is an example where the bot answers a sample question on transformers:
 
@@ -31,6 +32,7 @@ Here is an example where the bot answers a sample question on transformers:
     - [Models](#models)
     - [Customization](#customization)
     - [Error handling](#error-handling)
+* [Future scope](#future-scope)
 * [References](#references)
 
 ---
@@ -96,6 +98,8 @@ The following can be configured in ```mylib/config.json```:
 }
 ```
 
+> app_name is optional if you would like to showcase your own branding on the app; use_stopwords will remove the common words for the models to handle the questions better.
+
 ### Models
 
 - TBD
@@ -106,7 +110,14 @@ The following can be configured in ```mylib/config.json```:
 
 ### Error handling
 
-- TBD
+Errors will be shown on the red bar in the app. Implemented logic to handle domain selection, empty/short inputs, questions outside the scope of chatbot to prevent misinformation. Here is an example where the bot handles questions that are outside the scope of its knowledge (use_stopwords will enhance this function): 
+
+---
+
+## Future scope
+
+- Implement RAG (Retrieval-Augmented Generation) to improve domain specific knowledge.
+- Memory function to save the chat history.
 
 ---
 
