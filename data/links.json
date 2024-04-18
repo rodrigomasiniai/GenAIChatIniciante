@@ -1,5 +1,6 @@
 {
     "huggingface": "https://huggingface.co/",
     "nlp": "https://en.wikipedia.org/wiki/Natural_language_processing",
-    "python": "https://www.python.org/"
+    "python": "https://www.python.org/",
+    "transformers": "https://huggingface.co/learn/nlp-course/en/chapter1/4"
 }

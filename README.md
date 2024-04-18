@@ -5,11 +5,11 @@
 - Chat with your documents by asking questions on a user friendly web app.
 - Summarize your documents.
 - Too many links or contacts? Access them easily.
-- Create your own custom domain/topic e.g., development errors you would like to trace.
+- Create your own custom domain/topic to chat with e.g., development errors you would like to trace.
 - Supports different NLP models from Hugging Face.
 - No API keys required!
 
-Here is an example where the bot answers a sample question on transformers:
+An example where the bot answers some sample questions:
 
 <div align="center">
     <img src="data/images/question.jpg" alt="ChatDOCx" width="600"/>
@@ -65,7 +65,6 @@ BART (Bidirectional and Auto-Regressive Transformers) is a sequence-to-sequence 
 
 - **Auto-Regressive:** It employs an auto-regressive decoding strategy during generation, where it generates one token at a time from left to right based on the previously generated tokens. This approach ensures that each token is conditioned on the tokens generated before it, allowing it to produce coherent and contextually relevant outputs.
 
-
 ---
 
 ## Running the chatbot
@@ -75,7 +74,7 @@ BART (Bidirectional and Auto-Regressive Transformers) is a sequence-to-sequence 
 First up, install all the required Python dependencies by running: ```
 pip install -r requirements.txt ```
 
-> NOTE: Development environment is Windows/Python version 3.11.3 (there can always be version conflicts between the dependencies, OS, hardware etc.).
+> NOTE: Development environment is Windows/Python version 3.12.2 (there can always be version conflicts between the dependencies, OS, hardware etc.).
 
 ### Run the web app
 
@@ -83,7 +82,7 @@ The web application is powered by Flask, run it with: ```python nlp.py```. In th
 
  * Running on http:/100.0.1.0:8000
 
-Which is your web adress (just copy paste it in your browser to access the app).
+Which is your web adress (just copy paste it in your browser to access the app). Please refer to [Features](#features) to customize the app.
 
 ---
 
@@ -107,7 +106,7 @@ The following can be configured in ```mylib/config.json```:
 
 ### Domains
 
-Setting domains/topics is a core componenent of the chatbot as it performs better if the data is structured specifically as a single domain. Having domains will also help the bot to remember the context when asking questions.
+Setting domains/topics is a core component of the chatbot as it performs better if the data is structured as a single domain, because it will help the bot to remember the context behind the data when asking questions.
 
 ### Question answering
 
@@ -115,14 +114,14 @@ When you run the app, you are enforced to select a domain to start asking questi
 
 ### Text summarization
 
-After selecting a domain, simply include the keywords ``summary`` or ``summarize`` in your input question e.g., summary of transformers, summarize nlp etc., to get a summary of the domain.
+After selecting a domain, simply include the keywords ``summary`` or ``summarize`` in your input question e.g., summary of transformers, summarize nlp etc., to get a summary of the domain:
 
 ### Customization
 
 The chatbot can be highly customized as many functions are designed from scratch with flexibility. For instance:
 
-- **Data:** can be placed under ``data`` folder as a ``.txt`` file.
-- **Domains/topics:** are displayed based on the data (text file name) automatically. Several domains can be created depending on the text files you have in the data folder and you can also change the color of a domain by modifying the following snippet under ``templates/ChatDOCx.html``:
+- **Adding data:** Data is hosted under ``data`` folder as ``.txt`` files.
+- **Domains/topics:** are displayed based on the data (text file name) automatically. Several domains can be created depending on the text files you have in the data folder. The color of a domain can also be changed by modifying the following snippet under ``templates/ChatDOCx.html``:
 
 ```javascript
 
@@ -130,11 +129,16 @@ The chatbot can be highly customized as many functions are designed from scratch
 ```
 
 - **Models:** used are tested/selected on the responses they provide, but different models from Hugging Face can be used (see ``mylib/config.json`` to configure the model and ``References`` section for a list of Hugging Face models).
-- **Webapp:** The Flask webapp is designed from scratch with JavaScript styling and you can make it insane (see ``templates`` folder).
+- **Webapp:** is designed from scratch with HTML/JavaScript styling and you can design it as per your wish (see ``templates`` folder).
+- **Links:** can be added under ``data/links.json``. Just select the domain ``Links`` and include the keyword ``link`` followed by your question e.g., link to transformers.
+
+> NOTE: Links are also matched to your questions. In the example below, the keyword ``transformers`` in your question is also in the ``links.json`` database, which gives you a streamlined answer to ``learn more`` about transformers as a clickable link.
+
+- **Contacts:** can be added under ``data/contacts.json``. Just select the domain ``Contacts`` and include the keyword ``contact`` followed by your question e.g., contact of huggingface.
 
 ### Error handling
 
-Errors will be shown on the red bar in the app. Implemented logic to handle domain selection, empty/short inputs, questions outside the scope of chatbot to prevent misinformation. Below is an example where the bot handles questions outside the scope of its knowledge (Note: ``use_stopwords`` will enhance this function): 
+Errors will be shown on the red bar in the app. Implemented logic to handle domain selection, empty/short inputs, questions outside the scope of chatbot to prevent misinformation. Below is the showcase, including an example where the bot handles questions outside the scope of its knowledge (Note: ``use_stopwords`` will enhance this function): 
 
 ---
 
@@ -142,7 +146,7 @@ Errors will be shown on the red bar in the app. Implemented logic to handle doma
 
 - Implement RAG (Retrieval-Augmented Generation) to improve domain specific knowledge.
 - Memory function to save the chat history.
-- Function to handle multiple file formats (only supports .txt files atm).
+- Function to handle multiple file formats (only supports .txt files atm), or a better way to fetch the data in real-time.
 
 ---
 
