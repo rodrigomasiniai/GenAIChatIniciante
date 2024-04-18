@@ -16,9 +16,9 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #333333;
+            background-color: #2424237b; /* Adjust the background color of the app */
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgb(255, 255, 255);
         }
 
         h1,
@@ -44,7 +44,7 @@
         }
 
         input[type="submit"] {
-            background-color: #FFD700;
+            background-color: #FFD700; /* Adjust the background color of the submit button */
             color: #000000;
             padding: 5px 15px;
             border: none;
@@ -62,7 +62,7 @@
         }
 
         p.info-message {
-            background-color: #f36262;
+            background-color: #f36262; /* Adjust the background color of the error message info */
             padding: 10px;
             border-radius: 4px;
             margin: 10px 0;
@@ -92,7 +92,7 @@
             cursor: pointer;
             border-radius: 4px;
             transition: background-color 0.3s;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         /* Add this style for hover effect */
@@ -188,7 +188,7 @@
         </div>
         <form method="POST">
             <div>
-                <input type="text" name="user_input" placeholder="Chat by selecting available topics...">
+                <input type="text" name="user_input" placeholder="Chat by selecting available domains...">
             </div>
             <div>
                 <input type="submit" value="Submit" onclick="addScaleUpClass()">
@@ -196,7 +196,7 @@
         </form>
         <p class="chatbot-response">{{ answer | safe }}</p>
         <p class="info-message">{{ info_message }}</p>
-        <p class="info-message-note">Note: ChatDOCx is experimental and may not work properly. Please provide context-based questions for better results.</p>
+        <p class="info-message-note">NOTE: ChatDOCx is experimental and may not work properly. Please provide context-based questions for better results.</p>
     </div>
 </body>
 

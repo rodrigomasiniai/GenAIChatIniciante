@@ -2,7 +2,7 @@
 
 ### A domain specific chatbot powered by Hugging Face and Python
 
-- Chat with your documents by asking questions on a user friendly web app.
+- Chat with your documents by asking questions in an interactive web app.
 - Summarize your documents.
 - Too many links or contacts? Access them easily.
 - Create your own custom domain/topic to chat with e.g., development errors you would like to trace.
@@ -138,7 +138,7 @@ The chatbot can be highly customized as many functions are designed from scratch
 
 ### Error handling
 
-Errors will be shown on the red bar in the app. Implemented logic to handle domain selection, empty/short inputs, questions outside the scope of chatbot to prevent misinformation. Below is the showcase, including an example where the bot handles questions outside the scope of its knowledge (Note: ``use_stopwords`` will enhance this function): 
+Errors will be shown on the red bar in the app. Implemented logic to handle domain selection, empty/short inputs, questions outside the scope of chatbot to prevent misinformation. Below is the showcase, including an example where the bot handles questions outside the scope of its knowledge (NOTE: ``use_stopwords`` will enhance this function): 
 
 ---
 

@@ -51,10 +51,10 @@ def ChatDOCx():
         document_content = documents.get(selected_topic, "")
 
         if not user_input.strip():  # Check if user input is empty or contains only whitespace
-            return render_template("ChatDOCx.html", info_message="Sorry, I have no answers for empty questions ;)", app_name=model_loader.app_name, load_topics=load_topics, selected_topic=session.get('selected_topic', ''))
+            return render_template("ChatDOCx.html", info_message="Sorry, empty answers for empty questions ;)", app_name=model_loader.app_name, load_topics=load_topics, selected_topic=session.get('selected_topic', ''))
 
-        if len(user_input) < 5:
-            return render_template("ChatDOCx.html", info_message="Please ask a more context-based question for me to help you better.", app_name=model_loader.app_name, load_topics=load_topics, selected_topic=session.get('selected_topic', ''))
+        if len(user_input) < 6:
+            return render_template("ChatDOCx.html", info_message="Please ask a context-based question for me to help you better.", app_name=model_loader.app_name, load_topics=load_topics, selected_topic=session.get('selected_topic', ''))
 
         # Apply stop words if configured (not perfect but works most of the time)
         if model_loader.config.get("use_stopwords"):
