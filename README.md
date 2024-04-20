@@ -9,10 +9,10 @@
 - Supports different NLP models from Hugging Face.
 - No API keys required!
 
-An example where the bot answers some sample questions:
+An example where the bot answers a sample question on transformers:
 
 <div align="center">
-    <img src="data/images/question.jpg" alt="ChatDOCx" width="600"/>
+    <img src="data/images/question.jpg" alt="ChatDOCx" width=""/>
 </div>
 
 > NOTE: ChatDOCx is experimental and may not work properly. Please provide context-based questions for better results.
