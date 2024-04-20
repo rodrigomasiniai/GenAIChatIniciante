@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>ChatDOCx</title>
+    <title>ChatDOCx 1.0</title>
     <style>
         body {
             background-color: #1e1e1e;
@@ -13,18 +13,24 @@
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #2424237b; /* Adjust the background color of the app */
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgb(255, 255, 255);
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 900px;
+            padding: 40px;
+            background-color: #2424237b;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(23, 246, 64, 0.201);
         }
+
 
         h1,
         h2 {
             text-align: center;
-            color: #FFD700;
+            color: #259529;
+            font-family: 'Courier New';
         }
 
         form {
@@ -37,24 +43,32 @@
         margin: 10px 0;
         border: 2px solid #555555;
         border-radius: 8px; /* Adjust the border-radius for the input */
-        background-color: #444444;
+        background-color: #2424237b;
         color: #ffffff;
         font-size: 16px;
         box-sizing: border-box;
         }
 
         input[type="submit"] {
-            background-color: #FFD700; /* Adjust the background color of the submit button */
-            color: #000000;
-            padding: 5px 15px;
-            border: none;
-            border-radius: 4px;
+            background-color: transparent; /* Adjust the background color of the submit button */
+            color: #ffffff;
+            padding: 5px 10px;
+            border: 2px solid #555555;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 20px;
+            font-family: 'Courier New';
+            transition: background-color 0.2s;
+        }
+
+        /* Hover effect */
+        input[type="submit"]:hover {
+        background-color: #259529; /* Adjust the background color on hover */
+        color: #ffffff; /* Adjust the text color on hover */
         }
 
         p.chatbot-response {
-            background-color: #444444;
+            background-color: transparent;
             padding: 10px;
             border-radius: 4px;
             margin: 10px 0;
@@ -71,12 +85,12 @@
         }
 
         p.info-message-note {
-            background-color: #444444;
+            background-color: transparent;
             padding: 10px;
             border-radius: 4px;
             margin: 10px 0;
             font-size: 13px;
-            color: #FFD700;
+            color: #8c8a8a;
         }
 
         .topics-container {
@@ -84,20 +98,21 @@
         }
 
         .topic-button {
-            background-color: #4ecbf1;
+            background-color: transparent;
             color: #ffffff;
             border: none;
-            padding: 8px 15px;
-            margin: 5px;
+            padding: 8px 10px;
+            margin: 2px;
             cursor: pointer;
             border-radius: 4px;
             transition: background-color 0.3s;
             font-size: 15px;
+            font-family: 'Courier New';
         }
 
         /* Add this style for hover effect */
         .topic-button:hover {
-            background-color: #005c00; /* Adjust the color for the hover effect */
+            background-color: #4ecbf1; /* Adjust the color for the hover effect */
             color: #ffffff; /* Adjust the text color for the hover effect */
         }
 
@@ -176,7 +191,7 @@
         <h1>ChatDOCx</h1>
         <h2>{{ app_name }}</h2>
         <!-- Display buttons for each topic -->
-        <div class="topics-container">
+        <div class="topics-container" style="font-family: Courier New;font-size: 18px;">
             <p>Available domains:</p>
             {% for topic in load_topics %}
                 {% if topic in topic_colors %}
@@ -196,7 +211,7 @@
         </form>
         <p class="chatbot-response">{{ answer | safe }}</p>
         <p class="info-message">{{ info_message }}</p>
-        <p class="info-message-note">NOTE: ChatDOCx is experimental and may not work properly. Please provide context-based questions for better results.</p>
+        <p class="info-message-note">NOTE: ChatDOCx is experimental and may not work properly. Please provide context-based questions for better results. Version 1.0</p>
     </div>
 </body>
 
