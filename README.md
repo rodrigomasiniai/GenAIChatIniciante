@@ -110,7 +110,7 @@ Setting domains/topics is a core component of the chatbot as it performs better 
 
 ### Question answering
 
-When you run the app, you are enforced to select a domain to start asking questions, not because you can, but because you get better responses :)
+When you run the app, you are enforced to select a domain to start asking questions, not because you can, but because you get better responses :) So just select a domain, ask your question and then press ``Enter`` or click ``Submit``, as seen from the example at the start.
 
 ### Text summarization
 
