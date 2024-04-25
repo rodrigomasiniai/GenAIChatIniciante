@@ -2,17 +2,17 @@
 
 ### A domain specific chatbot powered by Hugging Face and Python
 
-- Chat with your documents by asking questions in an interactive web app.
-- Summarize your documents.
-- Too many links or contacts? Access them easily.
-- Create your own custom domain/topic to chat with e.g., development errors you would like to trace.
-- Supports different NLP models from Hugging Face.
-- No API keys required!
+- Chat with your documents by [asking questions](#question-answering) in an interactive web app.
+- [Summarize](#text-summarization) your documents.
+- Too many [links or contacts](#customization)? Access them easily.
+- Create your own custom [domain/topic](#domains) to chat with e.g., development errors you would like to trace.
+- Supports different [NLP models integration](#features) from Hugging Face.
+- **Free to use. ``No API keys`` required!**
 
-An example where the bot answers a sample question on transformers:
+An example where the bot answers some sample questions:
 
 <div align="center">
-    <img src="data/images/question.jpg" alt="ChatDOCx" width=""/>
+    <img src="https://i.imgur.com/Tfv5J2j.gif" alt="ChatDOCx" width=""/>
 </div>
 
 > NOTE: ChatDOCx is experimental and may not work properly. Please provide context-based questions for better results.
@@ -29,7 +29,7 @@ An example where the bot answers a sample question on transformers:
     - [Install the dependencies](#install-the-dependencies)
     - [Run the web app](#run-the-web-app)
 * [Features](#features)
-    - [Domains](#Domains)
+    - [Domains](#domains)
     - [Question answering](#question-answering)
     - [Text summarization](#text-summarization)
     - [Customization](#customization)
@@ -136,9 +136,17 @@ The chatbot can be highly customized as many functions are designed from scratch
 
 - **Contacts:** can be added under ``data/contacts.json``. Just select the domain ``Contacts`` and include the keyword ``contact`` followed by your question e.g., contact of huggingface.
 
+<div align="center">
+    <img src="https://i.imgur.com/MRqi30e.gif" alt="ChatDOCx" width=""/>
+</div>
+
 ### Error handling
 
 Errors will be shown on the red bar in the app. Implemented logic to handle domain selection, empty/short inputs, questions outside the scope of chatbot to prevent misinformation. Below is the showcase, including an example where the bot handles questions outside the scope of its knowledge (NOTE: ``use_stopwords`` will enhance this function): 
+
+<div align="center">
+    <img src="https://i.imgur.com/nEAShYw.gif" alt="ChatDOCx" width=""/>
+</div>
 
 ---
 

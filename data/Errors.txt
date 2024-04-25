@@ -1,3 +1,1 @@
-Tasking usage error is an error when all the licenses are busy/in use.
-
-Tasking network error is an error when trying to obtain the tasking license.
+Python execution error is an error during the execution of a Python program.
