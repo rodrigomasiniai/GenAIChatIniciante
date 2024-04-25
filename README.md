@@ -116,6 +116,12 @@ When you run the app, you are enforced to select a domain to start asking questi
 
 After selecting a domain, simply include the keywords ``summary`` or ``summarize`` in your input question e.g., summary of transformers, summarize nlp etc., to get a summary of the domain:
 
+<div align="center">
+    <img src="https://i.imgur.com/KV90xe9.gif" alt="ChatDOCx" width=""/>
+</div>
+
+> NOTE: Text summarization appears to be a bit slow. Performance probably depends on the model, the amount of data etc.
+
 ### Customization
 
 The chatbot can be highly customized as many functions are designed from scratch with flexibility. For instance:
