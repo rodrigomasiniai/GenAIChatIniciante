@@ -1,94 +1,96 @@
-# ChatDOCx
+## ChatDOCx: Seu Chatbot Personalizado com IA 🤖
 
-### A domain specific chatbot powered by Hugging Face and Python
+### Um chatbot especialista em seus documentos, desenvolvido com Hugging Face e Python
 
-- Chat with your documents by [asking questions](#question-answering) in an interactive web app.
-- [Summarize](#text-summarization) your documents.
-- Too many [links or contacts](#customization)? Access them easily.
-- Create your own custom [domain/topic](#domains) to chat with e.g., development errors you would like to trace.
-- Supports different [NLP models integration](#features) from Hugging Face.
-- **Free to use. ``No API keys`` required!**
+- **Converse com seus documentos [fazendo perguntas](#perguntas-e-respostas) em um aplicativo web interativo.**
+- [Resuma](#resumo-de-texto) seus documentos.
+- Muitos [links ou contatos](#personalizacao)? Acesse-os facilmente.
+- Crie seu próprio [domínio/tópico](#dominios) personalizado para conversar, por exemplo, sobre erros de desenvolvimento que você gostaria de rastrear.
+- Suporta a integração de diferentes [modelos de PNL](#recursos) do Hugging Face.
+- **Grátis para usar. `Sem necessidade de chaves de API`!**
 
-An example where the bot answers some sample questions:
+**Veja um exemplo do chatbot respondendo a algumas perguntas:**
 
 <div align="center">
     <img src="https://i.imgur.com/Tfv5J2j.gif" alt="ChatDOCx" width=""/>
 </div>
 
-> NOTE: ChatDOCx is experimental and may not work properly. Please provide context-based questions for better results.
-
---- 
-
-## Table of Contents
-
-* [Simple theory](#simple-theory)
-    - [Transformers](#transformers)
-    - [RoBERTa for question answering](#RoBERTa-for-question-answering)
-    - [BART for text summarization](#BART-for-text-summarization)
-* [Running the chatbot](#running-the-chatbot)
-    - [Install the dependencies](#install-the-dependencies)
-    - [Run the web app](#run-the-web-app)
-* [Features](#features)
-    - [Domains](#domains)
-    - [Question answering](#question-answering)
-    - [Text summarization](#text-summarization)
-    - [Customization](#customization)
-    - [Error handling](#error-handling)
-* [Future scope](#future-scope)
-* [References](#references)
+> **Observação:** O ChatDOCx é experimental e pode não funcionar perfeitamente. Faça perguntas com contexto para obter melhores resultados. 😉
 
 ---
 
-## Simple theory
+## Conteúdo
+
+* [Teoria Simplificada](#teoria-simplificada)
+    - [Transformers](#transformers)
+    - [RoBERTa para Respostas a Perguntas](#roberta-para-respostas-a-perguntas)
+    - [BART para Resumo de Texto](#bart-para-resumo-de-texto)
+* [Executando o Chatbot](#executando-o-chatbot)
+    - [Instalando as Dependências](#instalando-as-dependencias)
+    - [Executando o Aplicativo Web](#executando-o-aplicativo-web)
+* [Recursos](#recursos)
+    - [Domínios](#dominios)
+    - [Perguntas e Respostas](#perguntas-e-respostas)
+    - [Resumo de Texto](#resumo-de-texto)
+    - [Personalização](#personalizacao)
+    - [Tratamento de Erros](#tratamento-de-erros)
+* [Próximos Passos](#proximos-passos)
+* [Referências](#referencias)
+
+---
+
+## Teoria Simplificada
 
 ### Transformers
 
-- Transformers are a deep learning model architecture designed for sequential data processing tasks and have revolutionized NLP tasks.
-- They consist of multiple layers of ``self-attention`` (which is a key mechanism that enable them to weigh the importance of different input tokens dynamically, capturing long-range dependencies in the data effectively.) and ``feedforward neural networks``.
-- Pre-trained models like BERT, GPT, T5 etc., have been released by major organizations, enabling transfer learning for downstream NLP tasks.
+- **Transformers** são arquiteturas de aprendizado profundo projetadas para processar dados sequenciais e revolucionaram as tarefas de PNL (Processamento de Linguagem Natural).
+- Eles consistem em múltiplas camadas de `autoatenção` (mecanismo que permite ponderar a importância de diferentes tokens de entrada dinamicamente, capturando dependências de longo alcance nos dados) e `redes neurais feedforward`.
+- Modelos pré-treinados como BERT, GPT, T5 etc., foram disponibilizados por grandes empresas, permitindo o aprendizado de transferência para tarefas de PNL.
 
-We will use the following models for our chatbot:
+**Usaremos os seguintes modelos para o nosso chatbot:**
 
-### RoBERTa for question answering
+### RoBERTa para Respostas a Perguntas
 
-Facebook AI's RoBERTa (``Robustly Optimized BERT Approach``) is an improvement to Google AI's BERT (``Bidirectional Encoder Representations from Transformers``). While BERT laid the foundation for transformer-based models in NLP, RoBERTa further optimized the pre-training process and achieved better performance by leveraging larger datasets and advanced training techniques:
+O RoBERTa (`Robustly Optimized BERT Approach`) da Facebook AI é uma melhoria do BERT (`Bidirectional Encoder Representations from Transformers`) do Google AI. Enquanto o BERT lançou as bases para modelos baseados em transformers em PNL, o RoBERTa otimizou ainda mais o processo de pré-treinamento e alcançou melhor desempenho ao aproveitar conjuntos de dados maiores e técnicas de treinamento avançadas:
 
-- **Advanced Training Techniques:** RoBERTa incorporated techniques such as ``dynamic masking`` and ``increased batch sizes``. Dynamic masking involves masking tokens dynamically during pre-training, allowing the model to focus more on learning contextual information. Additionally, RoBERTa used larger mini-batches during training, which helped in better generalization and optimization.
+- **Técnicas de Treinamento Avançadas:** O RoBERTa incorporou técnicas como `mascaramento dinâmico` e `tamanhos de lote aumentados`. O mascaramento dinâmico envolve mascarar tokens dinamicamente durante o pré-treinamento, permitindo que o modelo se concentre mais no aprendizado de informações contextuais. Além disso, o RoBERTa usou mini-lotes maiores durante o treinamento, o que ajudou na melhor generalização e otimização.
 
-- **Focus on Masked Language Modeling (MLM):** Unlike BERT, which also included the ``next sentence prediction (NSP)`` task during pre-training, RoBERTa focused solely on the ``MLM`` task. By dedicating all resources to improving the accuracy of predicting masked tokens, RoBERTa was able to fine-tune its language understanding capabilities more effectively.
+- **Foco na Modelagem de Linguagem Mascarada (MLM):** Ao contrário do BERT, que também incluiu a tarefa de `previsão da próxima frase (NSP)` durante o pré-treinamento, o RoBERTa se concentrou apenas na tarefa de `MLM`. Ao dedicar todos os recursos para melhorar a precisão da previsão de tokens mascarados, o RoBERTa foi capaz de ajustar suas capacidades de compreensão da linguagem com mais eficácia.
 
-### BART for text summarization
+### BART para Resumo de Texto
 
-BART (Bidirectional and Auto-Regressive Transformers) is a sequence-to-sequence model introduced by Facebook AI:
+O BART (Bidirectional and Auto-Regressive Transformers) é um modelo de sequência para sequência introduzido pela Facebook AI:
 
-- **Bidirectional:** It can process input sequences in both forward and backward directions. This bidirectional capability enables BART to capture context from both preceding and succeeding tokens, enhancing its understanding of the input sequence.
+- **Bidirecional:** Ele pode processar sequências de entrada nas direções direta e inversa. Essa capacidade bidirecional permite que o BART capture o contexto dos tokens anteriores e posteriores, aprimorando sua compreensão da sequência de entrada.
 
-- **Auto-Regressive:** It employs an auto-regressive decoding strategy during generation, where it generates one token at a time from left to right based on the previously generated tokens. This approach ensures that each token is conditioned on the tokens generated before it, allowing it to produce coherent and contextually relevant outputs.
+- **Auto-Regressivo:** Ele emprega uma estratégia de decodificação auto-regressiva durante a geração, onde gera um token por vez, da esquerda para a direita, com base nos tokens gerados anteriormente. Essa abordagem garante que cada token seja condicionado aos tokens gerados antes dele, permitindo que ele produza saídas coerentes e contextualmente relevantes.
 
 ---
 
-## Running the chatbot
+## Executando o Chatbot
 
-### Install the dependencies
+### Instalando as Dependências
 
-First up, install all the required Python dependencies by running: ```
-pip install -r requirements.txt ```
+Primeiro, instale todas as dependências Python necessárias executando: ```pip install -r requirements.txt```
 
-> NOTE: Development environment is Windows/Python version 3.12.2 (there can always be version conflicts between the dependencies, OS, hardware etc.).
+> **Observação:** O ambiente de desenvolvimento é Windows/Python versão 3.12.2 (pode haver conflitos de versão entre as dependências, sistema operacional, hardware etc.).
 
-### Run the web app
+### Executando o Aplicativo Web
 
-The web application is powered by Flask, run it with: ```python nlp.py```. In the command window, you should see something like WARNING: This is a development server. Do not use it in a production deployment.
+O aplicativo web é desenvolvido com Flask. Execute-o com: ```python nlp.py```. Na janela de comando, você deverá ver algo como:
 
+```
+WARNING: This is a development server. Do not use it in a production deployment.
  * Running on http:/100.0.1.0:8000
+```
 
-Which is your web adress (just copy paste it in your browser to access the app). Please refer to [Features](#features) to customize the app.
+Este é o endereço do seu aplicativo web (copie e cole no navegador para acessá-lo). Consulte a seção [Recursos](#recursos) para personalizar o aplicativo.
 
 ---
 
-## Features
+## Recursos
 
-The following can be configured in ```mylib/config.json```:
+O seguinte pode ser configurado em `mylib/config.json`:
 
 ```json
 {
@@ -99,56 +101,55 @@ The following can be configured in ```mylib/config.json```:
 }
 ```
 
-- ``qa_model_name`` is the model used for question answering (RoBERTa).
-- ``summary_model_name`` is the model used for text summarization (BART).
-- ``app_name`` is optional if you would like to showcase your own branding on the app.
-- ``use_stopwords`` will remove the common english words for the models to handle the questions better.
+- `qa_model_name` é o modelo usado para respostas a perguntas (RoBERTa).
+- `summary_model_name` é o modelo usado para resumo de texto (BART).
+- `app_name` é opcional, caso queira exibir sua própria marca no aplicativo.
+- `use_stopwords` removerá as palavras comuns em inglês para que os modelos processem as perguntas com mais precisão.
 
-### Domains
+### Domínios
 
-Setting domains/topics is a core component of the chatbot as it performs better if the data is structured as a single domain, because it will help the bot to remember the context behind the data when asking questions.
+Definir domínios/tópicos é um componente essencial do chatbot, pois ele tem um desempenho melhor se os dados forem estruturados como um único domínio. Isso ajuda o bot a se lembrar do contexto por trás dos dados ao responder a perguntas.
 
-### Question answering
+### Perguntas e Respostas
 
-When you run the app, you are enforced to select a domain to start asking questions, not because you can, but because you get better responses :) So just select a domain, ask your question and then press ``Enter`` or click ``Submit``, as seen from the example at the start.
+Ao executar o aplicativo, você precisa selecionar um domínio para começar a fazer perguntas. Isso garante que você obtenha as melhores respostas possíveis! 😉 Selecione um domínio, faça sua pergunta e pressione `Enter` ou clique em `Submit`, como mostrado no exemplo no início.
 
-### Text summarization
+### Resumo de Texto
 
-After selecting a domain, simply include the keywords ``summary`` or ``summarize`` in your input question e.g., summary of transformers, summarize nlp etc., to get a summary of the domain:
+Após selecionar um domínio, basta incluir as palavras-chave `summary` ou `summarize` em sua pergunta, por exemplo, "summary of transformers" ou "summarize nlp", para obter um resumo do domínio:
 
 <div align="center">
     <img src="https://i.imgur.com/KV90xe9.gif" alt="ChatDOCx" width=""/>
 </div>
 
-> NOTE: Text summarization appears to be a bit slow. Performance probably depends on the model, the amount of data etc.
+> **Observação:** O resumo de texto pode ser um pouco lento. O desempenho provavelmente depende do modelo, da quantidade de dados etc.
 
-### Customization
+### Personalização
 
-The chatbot can be highly customized as many functions are designed from scratch with flexibility. For instance:
+O chatbot é altamente personalizável, pois muitas funções são projetadas do zero com flexibilidade. Por exemplo:
 
-- **Adding data:** Data is hosted under ``data`` folder as ``.txt`` files.
-- **Domains/topics:** are displayed based on the data (text file name) automatically. Several domains can be created depending on the text files you have in the data folder. The color of a domain can also be changed by modifying the following snippet under ``templates/ChatDOCx.html``:
+- **Adicionando dados:** Os dados são armazenados na pasta `data` como arquivos `.txt`.
+- **Domínios/tópicos:** são exibidos automaticamente com base nos dados (nome do arquivo de texto). Vários domínios podem ser criados dependendo dos arquivos de texto na pasta `data`. A cor de um domínio também pode ser alterada modificando o seguinte trecho de código em `templates/ChatDOCx.html`:
 
 ```javascript
-
 {% set topic_colors = {'Contacts': '#FFD700', 'Links': '#FFD700', 'Errors': '#f36262'} %}
 ```
 
-- **Models:** used are tested/selected on the responses they provide, but different models from Hugging Face can be used (see ``mylib/config.json`` to configure the model and ``References`` section for a list of Hugging Face models).
-- **Webapp:** is designed from scratch with HTML/JavaScript styling and you can design it as per your wish (see ``templates`` folder).
-- **Links:** can be added under ``data/links.json``. Just select the domain ``Links`` and include the keyword ``link`` followed by your question e.g., link to transformers.
+- **Modelos:** os modelos usados são testados/selecionados com base nas respostas que fornecem, mas diferentes modelos do Hugging Face podem ser usados (consulte `mylib/config.json` para configurar o modelo e a seção [Referências](#referencias) para obter uma lista de modelos do Hugging Face).
+- **Aplicativo Web:** é projetado do zero com estilo HTML/JavaScript e você pode personalizá-lo como desejar (consulte a pasta `templates`).
+- **Links:** podem ser adicionados em `data/links.json`. Basta selecionar o domínio `Links` e incluir a palavra-chave `link` seguida de sua pergunta, por exemplo, "link to transformers".
 
-> NOTE: Links are also matched to your questions. In the example below, the keyword ``transformers`` in your question is also in the ``links.json`` database, which gives you a streamlined answer to ``learn more`` about transformers as a clickable link.
+> **Observação:** Os links também são correspondidos às suas perguntas. No exemplo abaixo, a palavra-chave `transformers` em sua pergunta também está no banco de dados `links.json`, o que fornece uma resposta direta para `saiba mais` sobre transformers como um link clicável.
 
-- **Contacts:** can be added under ``data/contacts.json``. Just select the domain ``Contacts`` and include the keyword ``contact`` followed by your question e.g., contact of huggingface.
+- **Contatos:** podem ser adicionados em `data/contacts.json`. Basta selecionar o domínio `Contacts` e incluir a palavra-chave `contact` seguida de sua pergunta, por exemplo, "contact of huggingface".
 
 <div align="center">
     <img src="https://i.imgur.com/MRqi30e.gif" alt="ChatDOCx" width=""/>
 </div>
 
-### Error handling
+### Tratamento de Erros
 
-Errors will be shown on the red bar in the app. Implemented logic to handle domain selection, empty/short inputs, questions outside the scope of chatbot to prevent misinformation. Below is the showcase, including an example where the bot handles questions outside the scope of its knowledge (NOTE: ``use_stopwords`` will enhance this function): 
+Os erros serão mostrados na barra vermelha no aplicativo. A lógica implementada lida com a seleção de domínio, entradas vazias/curtas e perguntas fora do escopo do chatbot para evitar desinformação. Abaixo está uma demonstração, incluindo um exemplo onde o bot lida com perguntas fora de seu conhecimento (**Observação:** `use_stopwords` aprimorará esta função):
 
 <div align="center">
     <img src="https://i.imgur.com/nEAShYw.gif" alt="ChatDOCx" width=""/>
@@ -156,18 +157,17 @@ Errors will be shown on the red bar in the app. Implemented logic to handle doma
 
 ---
 
-## Future scope
+## Próximos Passos
 
-- Implement RAG (Retrieval-Augmented Generation) to improve domain specific knowledge.
-- Memory function to save the chat history.
-- Function to handle multiple file formats (only supports .txt files atm), or a better way to fetch the data in real-time.
+- Implementar RAG (Retrieval-Augmented Generation) para aprimorar o conhecimento específico do domínio.
+- Função de memória para salvar o histórico do chat.
+- Função para lidar com vários formatos de arquivo (atualmente, apenas arquivos .txt são suportados) ou uma maneira melhor de buscar os dados em tempo real.
 
 ---
 
-## References
+## Referências
 
-- Hugging Face Question Answering models: https://huggingface.co/models?pipeline_tag=question-answering&sort=trending
-- Hugging Face Summarization models: https://huggingface.co/models?pipeline_tag=summarization&sort=trending
+- Modelos de Perguntas e Respostas do Hugging Face: https://huggingface.co/models?pipeline_tag=question-answering&sort=trending
+- Modelos de Resumo do Hugging Face: https://huggingface.co/models?pipeline_tag=summarization&sort=trending
+
 ---
-
-*saimj7/ 14-04-2024 - © <a href="http://saimj7.github.io" target="_blank">Sai_Mj</a>.*

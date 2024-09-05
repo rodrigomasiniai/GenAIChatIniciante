@@ -67,3 +67,13 @@ If you're using virtual environments, you may need to update your virtual enviro
    ```bash
    source venv/bin/activate
    ```
+
+### Numpy problem
+Make the script `fix_numpy.sh` executable by running:
+   ```bash
+   chmod +x fix_numpy.sh
+   ```
+Then run the script:
+   ```bash
+   ./fix_numpy.sh
+   ```
